@@ -16,6 +16,8 @@ from logger import LOG
 from openai_whisper import asr, transcribe
 from minicpm_v_model import chat_with_image
 from docx_parser import generate_markdown_from_docx
+##
+import ssl
 
 
 os.environ["LANGCHAIN_TRACING_V2"] = "true"
@@ -186,6 +188,10 @@ if __name__ == "__main__":
     # 启动Gradio应用，允许队列功能，并通过 HTTPS 访问
     demo.queue().launch(
         share=False,
-        server_name="0.0.0.0",
+        server_name="0.0.0.0",  # 允许外部访问
+        server_port=7860,  # 尝试一个不同的端口
+        # ssl_keyfile="/root/key.pem",  # SSL 私钥文件路径
+        # ssl_certfile="/root/cert.pem", # SSL 证书文件路径
+        # ssl_verify=False  # 禁用证书验证
         # auth=("django", "qaz!@#$") # ⚠️注意：记住修改密码
     )
